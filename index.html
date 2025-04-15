@@ -1,0 +1,105 @@
+
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Fırat TV</title>
+  <style>
+    body {
+      font-family: sans-serif;
+      background-color: #e6f2ff;
+      color: #003366;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 2rem;
+    }
+    h1 {
+      color: #007acc;
+    }
+    .form-container {
+      background: #ffffff;
+      border-radius: 12px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+      padding: 2rem;
+      width: 100%;
+      max-width: 500px;
+    }
+    label {
+      display: block;
+      margin-top: 1rem;
+      font-weight: bold;
+    }
+    input {
+      width: 100%;
+      padding: 0.5rem;
+      margin-top: 0.25rem;
+      border-radius: 8px;
+      border: 1px solid #ccc;
+    }
+    button {
+      margin-top: 1.5rem;
+      padding: 0.75rem;
+      width: 100%;
+      border: none;
+      border-radius: 8px;
+      background-color: #007acc;
+      color: white;
+      font-size: 1rem;
+      cursor: pointer;
+    }
+    button:hover {
+      background-color: #005c99;
+    }
+    iframe {
+      margin-top: 2rem;
+      width: 100%;
+      max-width: 800px;
+      height: 480px;
+      border: none;
+    }
+  </style>
+</head>
+<body>
+  <h1>Fırat TV Player</h1>
+  <div class="form-container">
+    <label for="url">M3U URL:</label>
+    <input type="text" id="url" placeholder="https://ornek.com/list.m3u8">
+
+    <label for="xtream-url">Xtream URL:</label>
+    <input type="text" id="xtream-url" placeholder="http://site.com:port">
+
+    <label for="xtream-user">Kullanıcı Adı:</label>
+    <input type="text" id="xtream-user">
+
+    <label for="xtream-pass">Şifre:</label>
+    <input type="password" id="xtream-pass">
+
+    <button onclick="playStream()">Yayını Başlat</button>
+  </div>
+
+  <iframe id="player" allowfullscreen></iframe>
+
+  <script>
+    function playStream() {
+      const m3uUrl = document.getElementById('url').value;
+      const xtreamUrl = document.getElementById('xtream-url').value;
+      const xtreamUser = document.getElementById('xtream-user').value;
+      const xtreamPass = document.getElementById('xtream-pass').value;
+      let finalUrl = '';
+
+      if (m3uUrl) {
+        finalUrl = m3uUrl;
+      } else if (xtreamUrl && xtreamUser && xtreamPass) {
+        finalUrl = `${xtreamUrl}/live/${xtreamUser}/${xtreamPass}/1.m3u8`;
+      } else {
+        alert('Lütfen geçerli bir M3U URL veya Xtream bilgileri girin.');
+        return;
+      }
+
+      document.getElementById('player').src = finalUrl;
+    }
+  </script>
+</body>
+</html>
